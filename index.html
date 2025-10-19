@@ -918,6 +918,34 @@
         }
 
         init();
+        // ========== 🎧 自動播放（靜音模式）設定 ==========
+window.addEventListener("DOMContentLoaded", () => {
+  // 隨機挑一首或從第一首開始
+  currentIndex = Math.floor(Math.random() * PLAYLIST.length);
+  loadTrack(currentIndex);
+
+  // 靜音自動播放（避免瀏覽器阻擋）
+  audio.muted = true;
+  audio.autoplay = true;
+  audio.play().then(() => {
+    console.log("✅ 已靜音播放");
+    isPlaying = true;
+    playBtn.textContent = "⏸";
+    miniAlbum.classList.add("spinning");
+    document.getElementById('miniTrack').textContent = PLAYLIST[currentIndex].title;
+    document.getElementById('miniArtist').textContent = PLAYLIST[currentIndex].artist;
+  }).catch(err => {
+    console.warn("⚠️ 自動播放被阻擋，需要互動", err);
+  });
+});
+
+// 使用者第一次互動後解除靜音
+window.addEventListener("click", () => {
+  if (audio.muted) {
+    audio.muted = false;
+    console.log("🔊 使用者互動，已解除靜音");
+  }
+}, { once: true });
     </script>
 </body>
 </html>
