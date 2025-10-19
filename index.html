@@ -53,7 +53,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
             gap: 1rem;
         }
 
@@ -87,48 +86,205 @@
             color: var(--text-muted);
         }
 
-        /* Music Player */
-        .music-player {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
+        /* Mini Music Player */
+        .mini-player {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border: 1px solid var(--primary);
             border-radius: 12px;
-            padding: 1rem;
-            margin-top: 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .player-controls {
+            padding: 0.75rem 1rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 500px;
         }
 
-        .btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
+        .mini-album {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             border-radius: 8px;
-            background: white;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .mini-info {
+            flex: 1;
+            min-width: 0;
+            display: none;
+        }
+
+        .mini-track {
             font-size: 0.875rem;
-            transition: all 0.2s;
-            display: inline-flex;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mini-artist {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .mini-controls {
+            display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .btn:hover {
-            background: #f9fafb;
-            transform: translateY(-1px);
+        .mini-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
         }
 
-        .btn-primary {
+        .mini-btn:hover {
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .mini-btn.play {
             background: var(--primary);
             color: white;
-            border-color: var(--primary);
+            width: 36px;
+            height: 36px;
+            font-size: 1.1rem;
         }
 
-        .btn-primary:hover {
+        .mini-btn.play:hover {
             background: var(--primary-light);
+        }
+
+        .mini-btn.active {
+            color: var(--primary);
+        }
+
+        .mini-volume {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .volume-popup {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            margin-bottom: 0.5rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .volume-popup.show {
+            display: block;
+        }
+
+        .volume-slider-mini {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(0,0,0,0.1);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider-mini::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .volume-slider-mini::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Playlist Popup */
+        .playlist-popup {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            width: 280px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .playlist-popup.show {
+            display: block;
+        }
+
+        .playlist-item-mini {
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .playlist-item-mini:hover {
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .playlist-item-mini.active {
+            background: rgba(124, 58, 237, 0.2);
+        }
+
+        .playlist-num {
+            width: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .playlist-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .playlist-title {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .playlist-artist {
+            font-size: 0.75rem;
+            color: var(--text-muted);
         }
 
         /* Main Content */
@@ -137,7 +293,6 @@
             padding: 2rem 0;
         }
 
-        /* Hero Section */
         .hero {
             text-align: center;
             margin-bottom: 3rem;
@@ -189,7 +344,6 @@
             font-family: 'Courier New', monospace;
         }
 
-        /* Card */
         .card {
             background: var(--card-bg);
             border: 2px solid var(--primary);
@@ -246,7 +400,25 @@
             color: var(--text-muted);
         }
 
-        /* Tools Grid */
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
         .tools-section {
             margin-top: 3rem;
         }
@@ -277,7 +449,6 @@
             border-radius: 12px;
             padding: 1.5rem;
             transition: all 0.3s;
-            cursor: pointer;
         }
 
         .tool-card:hover {
@@ -319,11 +490,14 @@
         }
 
         .btn-disabled {
-            opacity: 0.5;
+            background: #e5e7eb;
+            color: #9ca3af;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
             cursor: not-allowed;
         }
 
-        /* Footer */
         footer {
             background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
@@ -338,14 +512,9 @@
             margin: 0.25rem 0;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .hero h2 {
                 font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
             }
 
             .card-title {
@@ -355,21 +524,33 @@
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+
+            .mini-player {
+                max-width: 100%;
+            }
+
+            .mini-info {
+                display: block;
+            }
         }
 
-        /* Music Note Animation */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @media (min-width: 769px) {
+            .mini-info {
+                display: block;
+            }
         }
 
-        .playing {
-            animation: pulse 1s infinite;
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .spinning {
+            animation: spin 3s linear infinite;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -380,45 +561,51 @@
                         <p>讓工作更有趣 🎉</p>
                     </div>
                 </div>
-            </div>
 
-            <!-- Music Player -->
-            <div class="music-player">
-                <div class="player-controls">
-                    <button class="btn" id="playBtn" onclick="toggleMusic()">
-                        <span id="musicIcon">🎵</span>
-                        <span id="musicText">播放音樂</span>
-                    </button>
-                    <div style="flex: 1;">
-                        <p style="font-size: 0.875rem; color: var(--text-muted);">
-                            <span id="musicStatus">尚未設定音樂</span>
-                        </p>
-                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">
-                            💡 提示：請在程式碼中設定 Suno 音樂連結
-                        </p>
+                <!-- Mini Music Player -->
+                <div class="mini-player" style="position: relative;">
+                    <div class="mini-album" id="miniAlbum">🎵</div>
+                    <div class="mini-info">
+                        <div class="mini-track" id="miniTrack">尚未載入</div>
+                        <div class="mini-artist" id="miniArtist">請設定播放清單</div>
+                    </div>
+                    <div class="mini-controls">
+                        <button class="mini-btn" id="prevBtn" title="上一首">⏮</button>
+                        <button class="mini-btn play" id="playBtn" title="播放">▶️</button>
+                        <button class="mini-btn" id="nextBtn" title="下一首">⏭</button>
+                        <button class="mini-btn" id="shuffleBtn" title="隨機">🔀</button>
+                        <button class="mini-btn" id="repeatBtn" title="循環">🔁</button>
+                        <div class="mini-volume">
+                            <button class="mini-btn" id="volumeBtn" title="音量">🔊</button>
+                            <div class="volume-popup" id="volumePopup">
+                                <input type="range" class="volume-slider-mini" id="volumeSlider" min="0" max="100" value="70">
+                            </div>
+                        </div>
+                        <button class="mini-btn" id="playlistBtn" title="播放清單">📋</button>
+                    </div>
+
+                    <!-- Playlist Popup -->
+                    <div class="playlist-popup" id="playlistPopup">
+                        <!-- Items will be inserted here -->
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main>
         <div class="container">
-            <!-- Hero Section -->
             <section class="hero">
                 <div class="hero-emoji">☕</div>
                 <h2>歡迎來到快樂時光</h2>
                 <p>工作之餘，來點輕鬆的娛樂吧！這裡有各種實用小工具，讓你的一天更加愉快 ✨</p>
                 
-                <!-- Current Time -->
                 <div class="time-display">
                     <p>現在時間</p>
                     <p id="currentTime">--:--:--</p>
                 </div>
             </section>
 
-            <!-- Salary Calculator Card -->
             <section>
                 <div class="card">
                     <div class="card-decoration"></div>
@@ -432,13 +619,12 @@
                     <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
                         想知道這個月可以領多少錢嗎？點擊下方按鈕，輕鬆計算你的薪資與加班費！
                     </p>
-                    <button class="btn btn-primary" onclick="openSalaryCalculator()" style="font-size: 1.125rem; padding: 0.75rem 2rem;">
+                    <button class="btn-primary" onclick="openSalaryCalculator()">
                         🧮 開始計算薪資
                     </button>
                 </div>
             </section>
 
-            <!-- Tools Section -->
             <section class="tools-section">
                 <div class="section-header">
                     <h3>實用小工具</h3>
@@ -446,35 +632,31 @@
                 </div>
 
                 <div class="tools-grid">
-                    <!-- Tool 1 -->
                     <div class="tool-card">
                         <div class="tool-icon primary">⏰</div>
                         <h4>休息倒數</h4>
                         <p>距離下班還有多久？</p>
-                        <button class="btn btn-disabled" disabled>即將推出</button>
+                        <button class="btn-disabled" disabled>即將推出</button>
                     </div>
 
-                    <!-- Tool 2 -->
                     <div class="tool-card">
                         <div class="tool-icon secondary">🎲</div>
                         <h4>隨機決定器</h4>
                         <p>讓骰子幫你做決定</p>
-                        <button class="btn btn-disabled" disabled>即將推出</button>
+                        <button class="btn-disabled" disabled>即將推出</button>
                     </div>
 
-                    <!-- Tool 3 -->
                     <div class="tool-card">
                         <div class="tool-icon accent">☕</div>
                         <h4>咖啡計時器</h4>
                         <p>完美沖泡時間提醒</p>
-                        <button class="btn btn-disabled" disabled>即將推出</button>
+                        <button class="btn-disabled" disabled>即將推出</button>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>🎵 享受工作，享受生活 🎵</p>
@@ -482,78 +664,218 @@
         </div>
     </footer>
 
-    <!-- Audio Element (Hidden) -->
-    <audio id="bgMusic" loop></audio>
+    <audio id="audio"></audio>
 
     <script>
         // ========== 設定區 ==========
-        // 在這裡設定您的 Suno 音樂連結
-        const MUSIC_URL = ""; // 例如: "https://cdn1.suno.ai/your-music-id.mp3"
-        
-        // ========== 時鐘功能 ==========
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('zh-TW', { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-            });
-            document.getElementById('currentTime').textContent = timeString;
-        }
+        const PLAYLIST = [
+            {
+                title: "範例歌曲 1",
+                artist: "藝人名稱",
+                url: "", // Suno 音樂連結
+                cover: "🎵"
+            },
+            {
+                title: "範例歌曲 2",
+                artist: "藝人名稱",
+                url: "",
+                cover: "🎶"
+            },
+            {
+                title: "範例歌曲 3",
+                artist: "藝人名稱",
+                url: "",
+                cover: "🎼"
+            }
+        ];
 
-        // 每秒更新時間
-        updateTime();
-        setInterval(updateTime, 1000);
-
-        // ========== 音樂播放器 ==========
-        const audio = document.getElementById('bgMusic');
+        // ========== 播放器 ==========
+        const audio = document.getElementById('audio');
         const playBtn = document.getElementById('playBtn');
-        const musicIcon = document.getElementById('musicIcon');
-        const musicText = document.getElementById('musicText');
-        const musicStatus = document.getElementById('musicStatus');
-        let isPlaying = false;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const repeatBtn = document.getElementById('repeatBtn');
+        const volumeBtn = document.getElementById('volumeBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumePopup = document.getElementById('volumePopup');
+        const playlistBtn = document.getElementById('playlistBtn');
+        const playlistPopup = document.getElementById('playlistPopup');
+        const miniAlbum = document.getElementById('miniAlbum');
+        const miniTrack = document.getElementById('miniTrack');
+        const miniArtist = document.getElementById('miniArtist');
 
-        // 設定音樂來源
-        if (MUSIC_URL) {
-            audio.src = MUSIC_URL;
-            musicStatus.textContent = '背景音樂';
+        let currentIndex = 0;
+        let isPlaying = false;
+        let isShuffle = false;
+        let repeatMode = 0; // 0: off, 1: all, 2: one
+
+        function init() {
+            if (PLAYLIST.length > 0 && PLAYLIST[0].url) {
+                loadTrack(0);
+                renderPlaylist();
+            }
+            audio.volume = volumeSlider.value / 100;
         }
 
-        function toggleMusic() {
-            if (!MUSIC_URL) {
-                alert('請先在程式碼中設定音樂連結（MUSIC_URL）');
+        function loadTrack(index) {
+            if (index < 0 || index >= PLAYLIST.length) return;
+            currentIndex = index;
+            const track = PLAYLIST[index];
+            audio.src = track.url;
+            miniTrack.textContent = track.title;
+            miniArtist.textContent = track.artist;
+            miniAlbum.textContent = track.cover;
+            updatePlaylistUI();
+        }
+
+        function togglePlay() {
+            if (!PLAYLIST[currentIndex].url) {
+                alert('請先在程式碼中設定音樂連結');
                 return;
             }
-
             if (isPlaying) {
                 audio.pause();
-                musicIcon.textContent = '🎵';
-                musicText.textContent = '播放音樂';
-                musicIcon.classList.remove('playing');
+                playBtn.textContent = '▶️';
+                miniAlbum.classList.remove('spinning');
             } else {
-                audio.play().catch(err => {
-                    console.error('播放失敗:', err);
-                    alert('音樂播放失敗，請檢查音樂連結是否正確');
-                });
-                musicIcon.textContent = '⏸️';
-                musicText.textContent = '暫停音樂';
-                musicIcon.classList.add('playing');
+                audio.play().catch(err => alert('播放失敗'));
+                playBtn.textContent = '⏸';
+                miniAlbum.classList.add('spinning');
             }
             isPlaying = !isPlaying;
         }
 
-        // 音樂結束時重置按鈕
-        audio.addEventListener('ended', () => {
-            musicIcon.textContent = '🎵';
-            musicText.textContent = '播放音樂';
-            musicIcon.classList.remove('playing');
-            isPlaying = false;
-        });
+        function prevTrack() {
+            let newIndex = currentIndex - 1;
+            if (newIndex < 0) newIndex = PLAYLIST.length - 1;
+            loadTrack(newIndex);
+            if (isPlaying) audio.play();
+        }
 
-        // ========== 薪資計算器 ==========
+        function nextTrack() {
+            let newIndex;
+            if (isShuffle) {
+                newIndex = Math.floor(Math.random() * PLAYLIST.length);
+            } else {
+                newIndex = currentIndex + 1;
+                if (newIndex >= PLAYLIST.length) newIndex = 0;
+            }
+            loadTrack(newIndex);
+            if (isPlaying) audio.play();
+        }
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            shuffleBtn.classList.toggle('active', isShuffle);
+        }
+
+        function toggleRepeat() {
+            repeatMode = (repeatMode + 1) % 3;
+            switch(repeatMode) {
+                case 0:
+                    repeatBtn.textContent = '🔁';
+                    repeatBtn.classList.remove('active');
+                    audio.loop = false;
+                    break;
+                case 1:
+                    repeatBtn.textContent = '🔁';
+                    repeatBtn.classList.add('active');
+                    audio.loop = false;
+                    break;
+                case 2:
+                    repeatBtn.textContent = '🔂';
+                    repeatBtn.classList.add('active');
+                    audio.loop = true;
+                    break;
+            }
+        }
+
+        function updateVolumeIcon(vol) {
+            volumeBtn.textContent = vol === 0 ? '🔇' : vol < 0.5 ? '🔉' : '🔊';
+        }
+
+        function renderPlaylist() {
+            playlistPopup.innerHTML = '';
+            PLAYLIST.forEach((track, i) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item-mini' + (i === currentIndex ? ' active' : '');
+                item.innerHTML = `
+                    <div class="playlist-num">${i + 1}</div>
+                    <div class="playlist-text">
+                        <div class="playlist-title">${track.title}</div>
+                        <div class="playlist-artist">${track.artist}</div>
+                    </div>
+                `;
+                item.onclick = () => {
+                    loadTrack(i);
+                    if (isPlaying) audio.play();
+                };
+                playlistPopup.appendChild(item);
+            });
+        }
+
+        function updatePlaylistUI() {
+            const items = playlistPopup.querySelectorAll('.playlist-item-mini');
+            items.forEach((item, i) => {
+                item.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // Events
+        playBtn.onclick = togglePlay;
+        prevBtn.onclick = prevTrack;
+        nextBtn.onclick = nextTrack;
+        shuffleBtn.onclick = toggleShuffle;
+        repeatBtn.onclick = toggleRepeat;
+        
+        volumeBtn.onclick = (e) => {
+            e.stopPropagation();
+            volumePopup.classList.toggle('show');
+        };
+
+        volumeSlider.oninput = (e) => {
+            const vol = e.target.value / 100;
+            audio.volume = vol;
+            updateVolumeIcon(vol);
+        };
+
+        playlistBtn.onclick = (e) => {
+            e.stopPropagation();
+            playlistPopup.classList.toggle('show');
+            volumePopup.classList.remove('show');
+        };
+
+        document.onclick = () => {
+            volumePopup.classList.remove('show');
+            playlistPopup.classList.remove('show');
+        };
+
+        audio.onended = () => {
+            if (repeatMode === 1) {
+                nextTrack();
+            } else if (repeatMode === 0) {
+                playBtn.textContent = '▶️';
+                miniAlbum.classList.remove('spinning');
+                isPlaying = false;
+            }
+        };
+
+        // ========== 時鐘 ==========
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = 
+                now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // ========== 其他 ==========
         function openSalaryCalculator() {
             window.open('https://polo1364.github.io/overtime-calculator/', '_blank');
         }
+
+        init();
     </script>
 </body>
 </html>
