@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公司娛樂中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #a78bfa;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg: #fefce8;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --text-muted: #6b7280;
+            --border: #d1d5db;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #fef3c7 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .title-section h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-section p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Music Player */
+        .music-player {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #f9fafb;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-emoji {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .time-display {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+        }
+
+        .time-display p:first-child {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .time-display p:last-child {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Card */
+        .card {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 128px;
+            height: 128px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%);
+            border-radius: 0 0 0 100%;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-description {
+            color: var(--text-muted);
+        }
+
+        /* Tools Grid */
+        .tools-section {
+            margin-top: 3rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+        }
+
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-icon.primary {
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .tool-icon.secondary {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .tool-icon.accent {
+            background: rgba(245, 158, 11, 0.2);
+        }
+
+        .tool-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .btn-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            padding: 1.5rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        footer p {
+            margin: 0.25rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Music Note Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .playing {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">☕</div>
+                    <div class="title-section">
+                        <h1>公司娛樂中心</h1>
+                        <p>讓工作更有趣 🎉</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Music Player -->
+            <div class="music-player">
+                <div class="player-controls">
+                    <button class="btn" id="playBtn" onclick="toggleMusic()">
+                        <span id="musicIcon">🎵</span>
+                        <span id="musicText">播放音樂</span>
+                    </button>
+                    <div style="flex: 1;">
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">
+                            <span id="musicStatus">尚未設定音樂</span>
+                        </p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">
+                            💡 提示：請在程式碼中設定 Suno 音樂連結
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-emoji">☕</div>
+                <h2>歡迎來到快樂時光</h2>
+                <p>工作之餘，來點輕鬆的娛樂吧！這裡有各種實用小工具，讓你的一天更加愉快 ✨</p>
+                
+                <!-- Current Time -->
+                <div class="time-display">
+                    <p>現在時間</p>
+                    <p id="currentTime">--:--:--</p>
+                </div>
+            </section>
+
+            <!-- Salary Calculator Card -->
+            <section>
+                <div class="card">
+                    <div class="card-decoration"></div>
+                    <div class="card-header">
+                        <div class="card-icon">🧮</div>
+                        <div>
+                            <h3 class="card-title">薪資計算機</h3>
+                            <p class="card-description">快速計算加班費與實際收入</p>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                        想知道這個月可以領多少錢嗎？點擊下方按鈕，輕鬆計算你的薪資與加班費！
+                    </p>
+                    <button class="btn btn-primary" onclick="openSalaryCalculator()" style="font-size: 1.125rem; padding: 0.75rem 2rem;">
+                        🧮 開始計算薪資
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tools Section -->
+            <section class="tools-section">
+                <div class="section-header">
+                    <h3>實用小工具</h3>
+                    <p>更多有趣的功能即將推出...</p>
+                </div>
+
+                <div class="tools-grid">
+                    <!-- Tool 1 -->
+                    <div class="tool-card">
+                        <div class="tool-icon primary">⏰</div>
+                        <h4>休息倒數</h4>
+                        <p>距離下班還有多久？</p>
+                        <button class="btn btn-disabled" disabled>即將推出</button>
+                    </div>
+
+                    <!-- Tool 2 -->
+                    <div class="tool-card">
+                        <div class="tool-icon secondary">🎲</div>
+                        <h4>隨機決定器</h4>
+                        <p>讓骰子幫你做決定</p>
+                        <button class="btn btn-disabled" disabled>即將推出</button>
+                    </div>
+
+                    <!-- Tool 3 -->
+                    <div class="tool-card">
+                        <div class="tool-icon accent">☕</div>
+                        <h4>咖啡計時器</h4>
+                        <p>完美沖泡時間提醒</p>
+                        <button class="btn btn-disabled" disabled>即將推出</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>🎵 享受工作，享受生活 🎵</p>
+            <p>公司娛樂中心 © 2025</p>
+        </div>
+    </footer>
+
+    <!-- Audio Element (Hidden) -->
+    <audio id="bgMusic" loop></audio>
+
+    <script>
+        // ========== 設定區 ==========
+        // 在這裡設定您的 Suno 音樂連結
+        const MUSIC_URL = ""; // 例如: "https://cdn1.suno.ai/your-music-id.mp3"
+        
+        // ========== 時鐘功能 ==========
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-TW', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // 每秒更新時間
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // ========== 音樂播放器 ==========
+        const audio = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        const musicText = document.getElementById('musicText');
+        const musicStatus = document.getElementById('musicStatus');
+        let isPlaying = false;
+
+        // 設定音樂來源
+        if (MUSIC_URL) {
+            audio.src = MUSIC_URL;
+            musicStatus.textContent = '背景音樂';
+        }
+
+        function toggleMusic() {
+            if (!MUSIC_URL) {
+                alert('請先在程式碼中設定音樂連結（MUSIC_URL）');
+                return;
+            }
+
+            if (isPlaying) {
+                audio.pause();
+                musicIcon.textContent = '🎵';
+                musicText.textContent = '播放音樂';
+                musicIcon.classList.remove('playing');
+            } else {
+                audio.play().catch(err => {
+                    console.error('播放失敗:', err);
+                    alert('音樂播放失敗，請檢查音樂連結是否正確');
+                });
+                musicIcon.textContent = '⏸️';
+                musicText.textContent = '暫停音樂';
+                musicIcon.classList.add('playing');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // 音樂結束時重置按鈕
+        audio.addEventListener('ended', () => {
+            musicIcon.textContent = '🎵';
+            musicText.textContent = '播放音樂';
+            musicIcon.classList.remove('playing');
+            isPlaying = false;
+        });
+
+        // ========== 薪資計算器 ==========
+        function openSalaryCalculator() {
+            window.open('https://polo1364.github.io/overtime-calculator/', '_blank');
+        }
+    </script>
+</body>
+</html>
+
