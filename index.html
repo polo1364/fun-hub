@@ -664,7 +664,7 @@
         </div>
     </footer>
 
-    <audio id="audio" preload="auto" autoplay muted></audio>
+    <audio id="audio" preload="auto" autoplay muted playsinline></audio>
 
     <script>
         // ========== 設定區 ==========
@@ -918,34 +918,48 @@
         }
 
         init();
-        // ========== 🎧 自動播放（靜音模式）設定 ==========
-window.addEventListener("DOMContentLoaded", () => {
-  // 隨機挑一首或從第一首開始
-  currentIndex = Math.floor(Math.random() * PLAYLIST.length);
-  loadTrack(currentIndex);
+        // 🎧 靜音自動播放 + 互動解除
+window.addEventListener("load", () => {
+  console.log("🎵 嘗試啟動自動播放...");
 
-  // 靜音自動播放（避免瀏覽器阻擋）
+  // 沒載入歌曲就載入第一首
+  if (!audio.src && PLAYLIST.length > 0) {
+    currentIndex = Math.floor(Math.random() * PLAYLIST.length); // 或改成 0 固定第一首
+    loadTrack(currentIndex);
+  }
+
+  // 確保靜音屬性
   audio.muted = true;
   audio.autoplay = true;
-  audio.play().then(() => {
-    console.log("✅ 已靜音播放");
-    isPlaying = true;
-    playBtn.textContent = "⏸";
-    miniAlbum.classList.add("spinning");
-    document.getElementById('miniTrack').textContent = PLAYLIST[currentIndex].title;
-    document.getElementById('miniArtist').textContent = PLAYLIST[currentIndex].artist;
-  }).catch(err => {
-    console.warn("⚠️ 自動播放被阻擋，需要互動", err);
-  });
+
+  // 嘗試播放
+  const tryPlay = () => {
+    audio.play()
+      .then(() => {
+        console.log("✅ 已靜音自動播放");
+        isPlaying = true;
+        playBtn.textContent = "⏸";
+        document.getElementById('miniTrack').textContent = PLAYLIST[currentIndex].title;
+        document.getElementById('miniArtist').textContent = PLAYLIST[currentIndex].artist;
+      })
+      .catch(err => {
+        console.warn("⚠️ 自動播放仍被阻擋", err);
+      });
+  };
+
+  // 有時載入太快，稍延遲可提高成功率
+  setTimeout(tryPlay, 400);
 });
 
-// 使用者第一次互動後解除靜音
+// 🖱️ 使用者第一次互動後解除靜音
 window.addEventListener("click", () => {
   if (audio.muted) {
     audio.muted = false;
-    console.log("🔊 使用者互動，已解除靜音");
+    console.log("🔊 已解除靜音");
+    audio.play();
   }
 }, { once: true });
+
     </script>
 </body>
 </html>
