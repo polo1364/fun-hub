@@ -548,6 +548,41 @@
         .spinning {
             animation: spin 3s linear infinite;
         }
+        /* 🎚️ 進度條樣式 */
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 0 10px;
+}
+
+#progressBar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  appearance: none;
+  background: linear-gradient(to right, #7c3aed, #f59e0b);
+  cursor: pointer;
+  outline: none;
+}
+
+#progressBar::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #f59e0b;
+  border: 2px solid white;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+#currentTime, #duration {
+  font-size: 12px;
+  color: #666;
+  width: 40px;
+  text-align: center;
+}
     </style>
 </head>
 <body>
@@ -582,6 +617,12 @@
                             </div>
                         </div>
                         <button class="mini-btn" id="playlistBtn" title="播放清單">📋</button>
+                    </div>
+                    <!-- 🎵 進度條 -->
+                    <div class="progress-container" id="progressContainer">
+                       <span id="currentTime">0:00</span>
+                         <input type="range" id="progressBar" value="0" min="0" max="100" step="0.1">
+                       <span id="duration">0:00</span>
                     </div>
 
                     <!-- Playlist Popup -->
@@ -746,6 +787,42 @@
         const miniAlbum = document.getElementById('miniAlbum');
         const miniTrack = document.getElementById('miniTrack');
         const miniArtist = document.getElementById('miniArtist');
+        // 🎚️ 音樂進度條控制
+const progressBar = document.getElementById("progressBar");
+const currentTimeEl = document.getElementById("currentTime");
+const durationEl = document.getElementById("duration");
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+// 更新進度條
+audio.addEventListener("timeupdate", () => {
+  if (audio.duration) {
+    const progress = (audio.currentTime / audio.duration) * 100;
+    progressBar.value = progress;
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    durationEl.textContent = formatTime(audio.duration);
+  }
+});
+
+// 拖曳控制播放位置
+progressBar.addEventListener("input", () => {
+  if (audio.duration) {
+    const newTime = (progressBar.value / 100) * audio.duration;
+    audio.currentTime = newTime;
+  }
+});
+
+// 換歌時重置
+audio.addEventListener("loadedmetadata", () => {
+  progressBar.value = 0;
+  currentTimeEl.textContent = "0:00";
+  durationEl.textContent = formatTime(audio.duration);
+});
+
 
         let currentIndex = 0;
         let isPlaying = false;
