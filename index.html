@@ -902,6 +902,49 @@
                 isPlaying = false;
             }
         };
+        // ========== 🎵 音樂播放結束後自動邏輯 ==========
+audio.addEventListener("ended", () => {
+  console.log("🎵 曲目播放結束");
+
+  if (repeatMode === 2) {
+    // 單曲重播模式（🔂）
+    audio.currentTime = 0;
+    audio.play();
+    return;
+  }
+
+  if (isShuffle) {
+    // 隨機播放模式
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * PLAYLIST.length);
+    } while (newIndex === currentIndex && PLAYLIST.length > 1);
+    currentIndex = newIndex;
+  } else {
+    // 依序播放
+    currentIndex++;
+    if (currentIndex >= PLAYLIST.length) {
+      // 若是循環播放 (repeatMode === 1)
+      if (repeatMode === 1) currentIndex = 0;
+      else {
+        // 播完全部就停止
+        console.log("⏹ 全部播放完畢");
+        playBtn.textContent = "▶️";
+        miniAlbum.classList.remove("spinning");
+        isPlaying = false;
+        return;
+      }
+    }
+  }
+
+  // 載入下一首並播放
+  loadTrack(currentIndex);
+  audio.play().then(() => {
+    console.log("▶️ 自動播放下一首：", PLAYLIST[currentIndex].title);
+  }).catch(err => {
+    console.warn("⚠️ 自動播放下一首失敗：", err);
+  });
+});
 
         // ========== 時鐘 ==========
         function updateTime() {
