@@ -1178,33 +1178,48 @@
         }
 
         // ========== 自動播放 ==========
+        let userInteracted = false;
+        
         window.addEventListener('load', () => {
+            // 載入隨機歌曲
             if (!audio.src && PLAYLIST.length > 0) {
                 currentIndex = Math.floor(Math.random() * PLAYLIST.length);
                 loadTrack(currentIndex);
             }
-
-            audio.muted = true;
-            audio.autoplay = true;
-
-            setTimeout(() => {
-                audio.play()
-                    .then(() => {
-                        isPlaying = true;
-                        playBtn.textContent = '⏸';
-                        miniAlbum.classList.add('spinning');
-                    })
-                    .catch(err => console.warn('自動播放被阻擋:', err));
-            }, 400);
         });
 
-        // 使用者互動後解除靜音
-        window.addEventListener('click', () => {
-            if (audio.muted) {
-                audio.muted = false;
-                if (isPlaying) audio.play();
+        // 使用者互動後立即播放
+        function startPlayback() {
+            if (userInteracted) return;
+            userInteracted = true;
+            
+            // 隱藏提示
+            const hintText = document.querySelector('.hint-text');
+            if (hintText) {
+                hintText.style.opacity = '0';
+                setTimeout(() => hintText.style.display = 'none', 500);
             }
-        }, { once: true });
+            
+            // 開始播放
+            audio.muted = false;
+            audio.play()
+                .then(() => {
+                    isPlaying = true;
+                    playBtn.textContent = '⏸';
+                    miniAlbum.classList.add('spinning');
+                })
+                .catch(err => {
+                    console.warn('播放失敗:', err);
+                    // 如果失敗，顯示播放按鈕讓使用者手動點擊
+                    playBtn.textContent = '▶️';
+                    isPlaying = false;
+                });
+        }
+
+        // 監聽多種使用者互動事件
+        ['click', 'touchstart', 'keydown'].forEach(event => {
+            document.addEventListener(event, startPlayback, { once: true });
+        });
 
         // 初始化
         init();
