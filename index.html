@@ -748,6 +748,7 @@
                                 <input type="range" class="volume-slider-mini" id="volumeSlider" min="0" max="100" value="70" aria-label="音量滑桿">
                             </div>
                         </div>
+                        <button class="mini-btn" id="downloadBtn" title="下載音樂" aria-label="下載音樂">⬇️</button>
                         <button class="mini-btn" id="playlistBtn" title="播放清單" aria-label="播放清單">📋</button>
                     </div>
 
@@ -1042,7 +1043,9 @@
         // ========== 播放器核心功能 ==========
         function init() {
             if (PLAYLIST.length > 0 && PLAYLIST[0].url) {
-                loadTrack(0);
+                // 隨機選擇第一首歌
+                currentIndex = Math.floor(Math.random() * PLAYLIST.length);
+                loadTrack(currentIndex);
                 renderPlaylist();
             }
             audio.volume = volumeSlider.value / 100;
@@ -1246,13 +1249,7 @@
         // ========== 自動播放 ==========
         let userInteracted = false;
         
-        window.addEventListener('load', () => {
-            // 載入隨機歌曲
-            if (!audio.src && PLAYLIST.length > 0) {
-                currentIndex = Math.floor(Math.random() * PLAYLIST.length);
-                loadTrack(currentIndex);
-            }
-        });
+        // 頁面載入完成（init 已經處理隨機選歌）
 
         // 使用者互動後立即播放
         function startPlayback() {
@@ -1285,6 +1282,19 @@
         // 監聽多種使用者互動事件
         ['click', 'touchstart', 'keydown'].forEach(event => {
             document.addEventListener(event, startPlayback, { once: true });
+        });
+
+        // 下載按鈕
+        const downloadBtn = document.getElementById('downloadBtn');
+        downloadBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const track = PLAYLIST[currentIndex];
+            if (track.url) {
+                const a = document.createElement('a');
+                a.href = track.url;
+                a.download = track.title + '.mp3';
+                a.click();
+            }
         });
 
         // 初始化
