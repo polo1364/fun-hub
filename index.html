@@ -879,7 +879,7 @@
                     <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
                         想知道這個月可以領多少錢嗎?點擊下方按鈕,輕鬆計算你的薪資與加班費!
                     </p>
-                    <button class="btn-primary" onclick="openSalaryCalculator()">
+                    <button class="btn-primary" onclick="window.open('https://polo1364.github.io/overtime-calculator/', '_blank')">
                         [ 開始計算薪資 ]
                     </button>
                 </div>
@@ -902,7 +902,7 @@
                         </div>
                     </div>
                     <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-                        想吃美味的鍋燒或蓋飯嗎?點擊下方按鈕查看菜單並輕鬆點餐!
+                        想吃美味的鍋燒或覆飯嗎?點擊下方按鈕查看菜單並輕鬆點餐!
                     </p>
                     <button class="btn-primary" onclick="window.open('https://polo1364.github.io/menu/', '_blank')">
                         [ 查看菜單點餐 ]
@@ -1279,10 +1279,7 @@
         loadTrack(0);
         updateVolume(70);
 
-        // 薪資計算器功能
-        function openSalaryCalculator() {
-            alert('薪資計算器功能開發中...');
-        }
+
 
         // 啟用音樂提示
         document.body.addEventListener('click', function enableAudio() {
