@@ -12,20 +12,25 @@
         }
 
         :root {
-            --primary: #7c3aed;
-            --primary-light: #a78bfa;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --bg: #fefce8;
-            --card-bg: #ffffff;
-            --text: #1f2937;
-            --text-muted: #6b7280;
-            --border: #d1d5db;
+            --primary: #00d9ff;
+            --primary-dark: #0099cc;
+            --secondary: #ff6b00;
+            --accent: #00ff88;
+            --bg: #0a0e1a;
+            --bg-secondary: #141824;
+            --card-bg: #1a1f2e;
+            --text: #e0e6ed;
+            --text-muted: #8b95a5;
+            --border: #2a3142;
+            --glow: rgba(0, 217, 255, 0.3);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, var(--bg) 0%, #fef3c7 100%);
+            font-family: 'Courier New', 'Consolas', monospace;
+            background: var(--bg);
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px);
             color: var(--text);
             min-height: 100vh;
             display: flex;
@@ -34,14 +39,14 @@
 
         /* Header */
         header {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(26, 31, 46, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 0 20px var(--glow);
             padding: 0.75rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .container {
@@ -67,36 +72,38 @@
         .logo {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px var(--glow);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.25rem;
             flex-shrink: 0;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
         }
 
         .title-section h1 {
             font-size: 1.25rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+            letter-spacing: 2px;
+            font-weight: bold;
         }
 
         .title-section p {
             font-size: 0.7rem;
             color: var(--text-muted);
+            letter-spacing: 1px;
         }
 
-        /* Mini Music Player - 手機優先設計 */
+        /* Mini Music Player */
         .mini-player {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%);
+            background: var(--card-bg);
             border: 1px solid var(--primary);
-            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
             padding: 0.75rem;
             width: 100%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: relative;
         }
 
@@ -110,8 +117,8 @@
         .mini-album {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: 1px solid var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -127,6 +134,7 @@
         .mini-track {
             font-size: 0.8125rem;
             font-weight: 600;
+            color: var(--primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -148,7 +156,7 @@
 
         .time-text {
             font-size: 0.6875rem;
-            color: var(--text-muted);
+            color: var(--accent);
             font-family: 'Courier New', monospace;
             width: 36px;
             text-align: center;
@@ -158,31 +166,30 @@
         #progressBar {
             flex: 1;
             height: 4px;
-            border-radius: 2px;
+            border-radius: 0;
             appearance: none;
-            background: linear-gradient(to right, var(--primary), var(--accent));
+            background: var(--border);
             cursor: pointer;
             outline: none;
+            border: 1px solid var(--primary);
         }
 
         #progressBar::-webkit-slider-thumb {
             appearance: none;
             width: 12px;
             height: 12px;
-            border-radius: 50%;
-            background: var(--accent);
-            border: 2px solid white;
-            box-shadow: 0 0 4px rgba(0,0,0,0.2);
+            background: var(--primary);
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 10px var(--glow);
             cursor: pointer;
         }
 
         #progressBar::-moz-range-thumb {
             width: 12px;
             height: 12px;
-            border-radius: 50%;
-            background: var(--accent);
-            border: 2px solid white;
-            box-shadow: 0 0 4px rgba(0,0,0,0.2);
+            background: var(--primary);
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 10px var(--glow);
             cursor: pointer;
         }
 
@@ -198,20 +205,21 @@
         .mini-btn {
             width: 32px;
             height: 32px;
-            border: none;
-            background: transparent;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.9375rem;
-            border-radius: 6px;
             transition: all 0.2s;
             flex-shrink: 0;
         }
 
         .mini-btn:hover {
-            background: rgba(124, 58, 237, 0.1);
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--glow);
         }
 
         .mini-btn:active {
@@ -220,19 +228,23 @@
 
         .mini-btn.play {
             background: var(--primary);
-            color: white;
+            color: var(--bg);
+            border-color: var(--primary);
             width: 36px;
             height: 36px;
             font-size: 1.0625rem;
+            box-shadow: 0 0 15px var(--glow);
         }
 
         .mini-btn.play:hover {
-            background: var(--primary-light);
+            background: var(--primary-dark);
         }
 
         .mini-btn.active {
-            color: var(--primary);
-            background: rgba(124, 58, 237, 0.15);
+            color: var(--accent);
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
         }
 
         .mini-volume {
@@ -245,11 +257,10 @@
             position: absolute;
             bottom: calc(100% + 0.5rem);
             right: 0;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary);
             padding: 0.75rem 0.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 0 20px var(--glow);
             display: none;
             z-index: 1001;
         }
@@ -263,8 +274,8 @@
             height: 4px;
             -webkit-appearance: none;
             appearance: none;
-            background: rgba(0,0,0,0.1);
-            border-radius: 2px;
+            background: var(--border);
+            border: 1px solid var(--primary);
             outline: none;
         }
 
@@ -274,17 +285,17 @@
             width: 12px;
             height: 12px;
             background: var(--primary);
-            border-radius: 50%;
             cursor: pointer;
+            box-shadow: 0 0 10px var(--glow);
         }
 
         .volume-slider-mini::-moz-range-thumb {
             width: 12px;
             height: 12px;
             background: var(--primary);
-            border-radius: 50%;
             cursor: pointer;
             border: none;
+            box-shadow: 0 0 10px var(--glow);
         }
 
         /* Playlist Popup */
@@ -292,11 +303,10 @@
             position: absolute;
             top: calc(100% + 0.5rem);
             right: 0;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary);
             padding: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 0 20px var(--glow);
             display: none;
             width: min(280px, calc(100vw - 2rem));
             max-height: 300px;
@@ -310,27 +320,29 @@
 
         .playlist-item-mini {
             padding: 0.5rem;
-            border-radius: 6px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             transition: background 0.2s;
             font-size: 0.8125rem;
+            border-left: 2px solid transparent;
         }
 
         .playlist-item-mini:hover {
-            background: rgba(124, 58, 237, 0.1);
+            background: var(--bg-secondary);
+            border-left-color: var(--primary);
         }
 
         .playlist-item-mini.active {
-            background: rgba(124, 58, 237, 0.2);
+            background: var(--bg-secondary);
+            border-left-color: var(--accent);
         }
 
         .playlist-num {
             width: 20px;
             text-align: center;
-            color: var(--text-muted);
+            color: var(--accent);
             font-size: 0.75rem;
             flex-shrink: 0;
         }
@@ -342,6 +354,7 @@
 
         .playlist-title {
             font-weight: 500;
+            color: var(--primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -366,131 +379,188 @@
         .hero-emoji {
             font-size: 3.5rem;
             margin-bottom: 0.75rem;
-            animation: bounce 2s infinite;
+            filter: drop-shadow(0 0 20px var(--glow));
+            animation: pulse 3s infinite;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--glow)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 30px var(--glow)); }
         }
 
         .hero h2 {
             font-size: 1.75rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 0.75rem;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--glow);
+            letter-spacing: 3px;
         }
 
         .hero p {
-            font-size: 0.9375rem;
             color: var(--text-muted);
+            font-size: 0.9375rem;
             max-width: 600px;
-            margin: 0 auto 1.5rem;
-            line-height: 1.6;
+            margin: 0 auto;
         }
 
         .time-display {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px var(--glow);
             display: inline-block;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 0.75rem 1.25rem;
-            border-radius: 50px;
         }
 
         .time-display p:first-child {
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             color: var(--text-muted);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
         }
 
         .time-display p:last-child {
             font-size: 1.25rem;
-            font-weight: bold;
+            font-weight: 600;
             font-family: 'Courier New', monospace;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
         }
 
+        /* Section Styles */
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 1.5rem;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            z-index: -1;
+        }
+
+        .section-title h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--glow);
+            background: var(--bg);
+            display: inline-block;
+            padding: 0 1rem;
+            letter-spacing: 3px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+            background: var(--bg);
+            display: inline-block;
+            padding: 0 1rem;
+        }
+
+        /* Card Styles */
         .card {
             background: var(--card-bg);
-            border: 2px solid var(--primary);
-            border-radius: 16px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.1);
             padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
         .card:hover {
-            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
-            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--glow);
+            transform: translateY(-4px);
+            border-color: var(--accent);
         }
 
         .card-decoration {
             position: absolute;
             top: 0;
             right: 0;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%);
-            border-radius: 0 0 0 100%;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            opacity: 0.05;
+            clip-path: polygon(100% 0, 100% 100%, 0 0);
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
             margin-bottom: 1rem;
-            position: relative;
         }
 
         .card-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px var(--glow);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             flex-shrink: 0;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
         }
 
         .card-title {
             font-size: 1.5rem;
-            font-weight: bold;
             margin-bottom: 0.25rem;
+            color: var(--primary);
+            letter-spacing: 2px;
         }
 
         .card-description {
-            color: var(--text-muted);
             font-size: 0.875rem;
-        }
-
-        .card p {
-            font-size: 0.9375rem;
-            line-height: 1.6;
+            color: var(--text-muted);
         }
 
         .btn-primary {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.75rem;
-            border-radius: 8px;
-            font-size: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--bg);
+            border: 1px solid var(--primary);
+            padding: 0.75rem 1.5rem;
             cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px var(--glow);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
         }
 
         .btn-primary:hover {
-            background: var(--primary-light);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--glow);
+            border-color: var(--accent);
         }
 
         .btn-primary:active {
@@ -501,88 +571,106 @@
             margin-top: 2rem;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-header h3 {
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 0.9375rem;
-        }
-
         .tools-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
         }
 
-        .tool-card {
+        /* Game Card Styles */
+        .game-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.1);
             padding: 1.25rem;
             transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .tool-card:hover {
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .game-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+
+        .game-card:hover::after {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            box-shadow: 0 0 25px var(--glow);
             transform: translateY(-4px);
+            border-color: var(--primary);
         }
 
-        .tool-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+        .game-icon {
+            width: 64px;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.375rem;
-            margin-bottom: 0.75rem;
+            font-size: 2rem;
+            margin: 0 auto 0.75rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px var(--glow);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            position: relative;
+            z-index: 1;
         }
 
-        .tool-icon.primary {
-            background: rgba(124, 58, 237, 0.1);
-        }
-
-        .tool-icon.secondary {
-            background: rgba(16, 185, 129, 0.15);
-        }
-
-        .tool-icon.accent {
-            background: rgba(245, 158, 11, 0.15);
-        }
-
-        .tool-card h4 {
+        .game-card h4 {
             font-size: 1.125rem;
             margin-bottom: 0.5rem;
+            color: var(--primary);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
         }
 
-        .tool-card p {
+        .game-card p {
             color: var(--text-muted);
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             font-size: 0.875rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .btn-disabled {
-            background: #e5e7eb;
-            color: #9ca3af;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: not-allowed;
+        .btn-game {
+            background: var(--bg-secondary);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.625rem 1.25rem;
+            cursor: pointer;
             font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-game:hover {
+            background: var(--primary);
+            color: var(--bg);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--glow);
         }
 
         footer {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border);
+            background: var(--card-bg);
+            border-top: 2px solid var(--primary);
+            box-shadow: 0 0 20px var(--glow);
             padding: 1.25rem 0;
             text-align: center;
             color: var(--text-muted);
@@ -711,10 +799,10 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo-section">
-                    <div class="logo">☕</div>
+                    <div class="logo">⚡</div>
                     <div class="title-section">
                         <h1>大瑞娛樂中心</h1>
-                        <p>讓工作更有趣 🎉</p>
+                        <p>[ Profound Material Technology Co., Ltd ]</p>
                     </div>
                 </div>
 
@@ -762,31 +850,62 @@
     <main>
         <div class="container">
             <section class="hero">
-                <div class="hero-emoji">☕</div>
-                <h2>歡迎來到快樂時光</h2>
-                <p>工作之餘，來點輕鬆的娛樂吧！這裡有各種實用小工具，讓你的一天更加愉快 ✨</p>
+                <div class="hero-emoji">⚡</div>
+                <h2>SYSTEM ONLINE</h2>
+                <p>[ 工作之餘,來點輕鬆的娛樂吧!這裡有各種實用小工具,讓你的一天更加愉快 ]</p>
                 
                 <div class="time-display">
-                    <p>現在時間</p>
+                    <p>[ SYSTEM TIME ]</p>
                     <p id="clockTime">--:--:--</p>
                 </div>
             </section>
 
-                        <section>
+            <!-- 工作區 -->
+            <div class="section-title">
+                <h3>💼 WORK ZONE</h3>
+                <p>[ 實用的工作計算工具 ]</p>
+            </div>
+
+            <section>
+                <div class="card">
+                    <div class="card-decoration"></div>
+                    <div class="card-header">
+                        <div class="card-icon">🧮</div>
+                        <div>
+                            <h3 class="card-title">薪資計算機</h3>
+                            <p class="card-description">[ SALARY CALCULATOR ]</p>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                        想知道這個月可以領多少錢嗎?點擊下方按鈕,輕鬆計算你的薪資與加班費!
+                    </p>
+                    <button class="btn-primary" onclick="openSalaryCalculator()">
+                        [ 開始計算薪資 ]
+                    </button>
+                </div>
+            </section>
+
+            <!-- 美食區 -->
+            <div class="section-title">
+                <h3>🍜 FOOD ZONE</h3>
+                <p>[ 美味餐點線上點餐 ]</p>
+            </div>
+
+            <section>
                 <div class="card">
                     <div class="card-decoration"></div>
                     <div class="card-header">
                         <div class="card-icon">🍜</div>
                         <div>
                             <h3 class="card-title">一翻馫</h3>
-                            <p class="card-description">美味鍋燒與覆飯點餐系統</p>
+                            <p class="card-description">[ NOODLE & RICE ORDERING ]</p>
                         </div>
                     </div>
                     <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-                        想吃美味的鍋燒或覆飯嗎？點擊下方按鈕查看菜單並輕鬆點餐！
+                        想吃美味的鍋燒或覆飯嗎?點擊下方按鈕查看菜單並輕鬆點餐!
                     </p>
                     <button class="btn-primary" onclick="window.open('https://polo1364.github.io/menu/', '_blank')">
-                        🍜 查看菜單點餐
+                        [ 查看菜單點餐 ]
                     </button>
                 </div>
             </section>
@@ -798,507 +917,380 @@
                         <div class="card-icon">🍗</div>
                         <div>
                             <h3 class="card-title">派克炸雞</h3>
-                            <p class="card-description">美味炸雞與配餐點餐系統</p>
+                            <p class="card-description">[ FRIED CHICKEN ORDERING ]</p>
                         </div>
                     </div>
                     <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-                        想吃香酥的炸雞嗎？點擊下方按鈕查看菜單並輕鬆點餐！
+                        想吃香酥的炸雞嗎?點擊下方按鈕查看菜單並輕鬆點餐!
                     </p>
                     <button class="btn-primary" onclick="window.open('https://polo1364.github.io/TwoPeckMenu/', '_blank')">
-                        🍗 查看菜單點餐
+                        [ 查看菜單點餐 ]
                     </button>
                 </div>
             </section>
 
-<section>
-                <div class="card">
-                    <div class="card-decoration"></div>
-                    <div class="card-header">
-                        <div class="card-icon">🧮</div>
-                        <div>
-                            <h3 class="card-title">薪資計算機</h3>
-                            <p class="card-description">快速計算加班費與實際收入</p>
-                        </div>
-                    </div>
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-                        想知道這個月可以領多少錢嗎？點擊下方按鈕，輕鬆計算你的薪資與加班費！
-                    </p>
-                    <button class="btn-primary" onclick="openSalaryCalculator()">
-                        🧮 開始計算薪資
-                    </button>
-                </div>
-            </section>
+            <!-- 遊戲區 -->
+            <div class="section-title">
+                <h3>🎮 GAME ZONE</h3>
+                <p>[ 輕鬆休閒小遊戲 ]</p>
+            </div>
 
             <section class="tools-section">
-                <div class="section-header">
-                    <h3>實用小工具</h3>
-                    <p>更多有趣的功能即將推出...</p>
-                </div>
-
                 <div class="tools-grid">
-                    <div class="tool-card">
-                        <div class="tool-icon primary">⏰</div>
-                        <h4>休息倒數</h4>
-                        <p>距離下班還有多久？</p>
-                        <button class="btn-disabled" disabled>即將推出</button>
+                    <div class="game-card">
+                        <div class="game-icon">🀄</div>
+                        <h4>文字麻將</h4>
+                        <p>[ 經典麻將遊戲,挑戰你的策略! ]</p>
+                        <button class="btn-game" onclick="window.open('https://polo1364.github.io/mahjong/', '_blank')">
+                            [ 開始遊戲 ]
+                        </button>
                     </div>
 
-                    <div class="tool-card">
-                        <div class="tool-icon secondary">🎲</div>
-                        <h4>隨機決定器</h4>
-                        <p>讓骰子幫你做決定</p>
-                        <button class="btn-disabled" disabled>即將推出</button>
+                    <div class="game-card">
+                        <div class="game-icon">🃏</div>
+                        <h4>大老二</h4>
+                        <p>[ 經典撲克牌遊戲,比比誰最大! ]</p>
+                        <button class="btn-game" onclick="window.open('https://polo1364.github.io/big2/', '_blank')">
+                            [ 開始遊戲 ]
+                        </button>
                     </div>
 
-                    <div class="tool-card">
-                        <div class="tool-icon accent">☕</div>
-                        <h4>咖啡計時器</h4>
-                        <p>完美沖泡時間提醒</p>
-                        <button class="btn-disabled" disabled>即將推出</button>
+                    <div class="game-card">
+                        <div class="game-icon">♟️</div>
+                        <h4>象棋暗棋</h4>
+                        <p>[ 翻翻樂象棋,考驗你的運氣與智慧! ]</p>
+                        <button class="btn-game" onclick="window.open('https://polo1364.github.io/dark-chess/', '_blank')">
+                            [ 開始遊戲 ]
+                        </button>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <p class="hint-text">🔊 點擊任意處以啟用音樂</p>
+    <p class="hint-text">[ 🔊 點擊任意處以啟用音樂 ]</p>
 
     <footer>
         <div class="container">
-            <p>🎵 享受工作，享受生活 🎵</p>
-            <p>大瑞娛樂中心 © 2025</p>
+            <p>[ © 2025 Profound Material Technology Co., Ltd ]</p>
+            <p>[ 大瑞娛樂中心 | SYSTEM STATUS: ONLINE ]</p>
         </div>
     </footer>
 
-    <audio id="audio" preload="auto" autoplay muted playsinline></audio>
-
     <script>
-        // ========== 播放清單設定 ==========
-        const PLAYLIST = [
+        // 時鐘更新
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clockTime').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 音樂播放器功能
+        const playlist = [
             {
                 title: "1.藍光的心跳",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/1.藍光的心跳.mp3",
-                cover: "🎵"
+                emoji: "🎵"
             },
             {
                 title: "2.我們的每一天",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/2.我們的每一天.mp3",
-                cover: "🎶"
+                emoji: "🎶"
             },
             {
                 title: "3.光年之外的夢",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/3.光年之外的夢.mp3",
-                cover: "🎼"
+                emoji: "🎼"
             },
             {
                 title: "4.不一樣的光",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/4.不一樣的光.mp3",
-                cover: "🎹"
+                emoji: "🎹"
             },
             {
                 title: "5.勇敢的名字",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/5.勇敢的名字.mp3",
-                cover: "🎸"
+                emoji: "🎸"
             },
             {
                 title: "6.時間的信",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/6.時間的信.mp3",
-                cover: "🎺"
+                emoji: "🎺"
             },
             {
                 title: "7.信號",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/7.信號.mp3",
-                cover: "🎻"
+                emoji: "🎻"
             },
             {
                 title: "8.風裡的約定",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/8.風裡的約定.mp3",
-                cover: "🎷"
+                emoji: "🎷"
             },
             {
                 title: "9.城市的溫度",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/9.城市的溫度.mp3",
-                cover: "🥁"
+                emoji: "🥁"
             },
             {
                 title: "10.永不熄的火",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/10.永不熄的火.mp3",
-                cover: "🎤"
+                emoji: "🎤"
             },
             {
                 title: "11.黎明的起點-創新敘事版",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/11.黎明的起點-創新敘事版.mp3",
-                cover: "🥁"
+                emoji: "🎵"
             },
             {
                 title: "12.黎明的起點",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/12.黎明的起點.mp3",
-                cover: "🥁"
+                emoji: "🎶"
             },
             {
                 title: "13.水銀的夢",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/13.水銀的夢.mp3",
-                cover: "🥁"
+                emoji: "🎼"
             },
             {
                 title: "14.築光的人",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/14.築光的人.mp3",
-                cover: "🥁"
+                emoji: "🎹"
             },
             {
                 title: "15.方程式",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/15.方程式.mp3",
-                cover: "🥁"
+                emoji: "🎸"
             },
             {
                 title: "16.風在說話",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/16.風在說話.mp3",
-                cover: "🥁"
+                emoji: "🎺"
             },
             {
                 title: "17.聲音的形狀",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/17.聲音的形狀.mp3",
-                cover: "🥁"
+                emoji: "🎻"
             },
             {
                 title: "18.星落以南",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/18.星落以南.mp3",
-                cover: "🥁"
+                emoji: "🎷"
             },
             {
                 title: "19.光年之外的夢",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/19.光年之外的夢.mp3",
-                cover: "🥁"
+                emoji: "🥁"
             },
             {
                 title: "20.最後的燈",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/20.最後的燈.mp3",
-                cover: "🥁"
+                emoji: "🎤"
             },
             {
                 title: "21.我們的光",
                 artist: "Suno",
                 url: "https://polo1364.github.io/fun-hub/21.我們的光.mp3",
-                cover: "🥁"
+                emoji: "🎵"
             }
         ];
 
-        // ========== DOM 元素 ==========
-        const audio = document.getElementById('audio');
-        const playBtn = document.getElementById('playBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const shuffleBtn = document.getElementById('shuffleBtn');
-        const repeatBtn = document.getElementById('repeatBtn');
-        const volumeBtn = document.getElementById('volumeBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const volumePopup = document.getElementById('volumePopup');
-        const playlistBtn = document.getElementById('playlistBtn');
-        const playlistPopup = document.getElementById('playlistPopup');
-        const miniAlbum = document.getElementById('miniAlbum');
-        const miniTrack = document.getElementById('miniTrack');
-        const miniArtist = document.getElementById('miniArtist');
-        const progressBar = document.getElementById('progressBar');
-        const currentTimeEl = document.getElementById('currentTime');
-        const durationEl = document.getElementById('duration');
-
-        // ========== 播放器狀態 ==========
-        let currentIndex = 0;
+        let currentTrack = 0;
         let isPlaying = false;
         let isShuffle = false;
-        let repeatMode = 0; // 0: off, 1: all, 2: one
-
-        // ========== 工具函數 ==========
-        function formatTime(seconds) {
-            if (isNaN(seconds)) return '0:00';
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return `${m}:${s.toString().padStart(2, '0')}`;
-        }
-
-        function updateVolumeIcon(vol) {
-            volumeBtn.textContent = vol === 0 ? '🔇' : vol < 0.5 ? '🔉' : '🔊';
-        }
-
-        // ========== 播放器核心功能 ==========
-        function init() {
-            if (PLAYLIST.length > 0 && PLAYLIST[0].url) {
-                // 隨機選擇第一首歌
-                currentIndex = Math.floor(Math.random() * PLAYLIST.length);
-                loadTrack(currentIndex);
-                renderPlaylist();
-            }
-            audio.volume = volumeSlider.value / 100;
-        }
+        let repeatMode = 0; // 0: 不循環, 1: 循環全部, 2: 單曲循環
+        const audio = new Audio();
 
         function loadTrack(index) {
-            if (index < 0 || index >= PLAYLIST.length) return;
-            currentIndex = index;
-            const track = PLAYLIST[index];
+            const track = playlist[index];
+            document.getElementById('miniTrack').textContent = track.title;
+            document.getElementById('miniArtist').textContent = track.artist;
+            document.getElementById('miniAlbum').textContent = track.emoji;
             audio.src = track.url;
-            miniTrack.textContent = track.title;
-            miniArtist.textContent = track.artist;
-            miniAlbum.textContent = track.cover;
             updatePlaylistUI();
         }
 
         function togglePlay() {
-            if (!PLAYLIST[currentIndex].url) {
-                alert('請先設定音樂連結');
-                return;
-            }
             if (isPlaying) {
                 audio.pause();
-                playBtn.textContent = '▶️';
-                miniAlbum.classList.remove('spinning');
+                document.getElementById('playBtn').textContent = '▶️';
             } else {
-                audio.play().catch(err => {
-                    console.warn('播放失敗:', err);
-                });
-                playBtn.textContent = '⏸';
-                miniAlbum.classList.add('spinning');
+                audio.play();
+                document.getElementById('playBtn').textContent = '⏸️';
             }
             isPlaying = !isPlaying;
         }
 
-        function prevTrack() {
-            let newIndex = currentIndex - 1;
-            if (newIndex < 0) newIndex = PLAYLIST.length - 1;
-            loadTrack(newIndex);
+        function nextTrack() {
+            if (isShuffle) {
+                currentTrack = Math.floor(Math.random() * playlist.length);
+            } else {
+                currentTrack = (currentTrack + 1) % playlist.length;
+            }
+            loadTrack(currentTrack);
             if (isPlaying) audio.play();
         }
 
-        function nextTrack() {
-            let newIndex;
-            if (isShuffle) {
-                do {
-                    newIndex = Math.floor(Math.random() * PLAYLIST.length);
-                } while (newIndex === currentIndex && PLAYLIST.length > 1);
-            } else {
-                newIndex = currentIndex + 1;
-                if (newIndex >= PLAYLIST.length) newIndex = 0;
-            }
-            loadTrack(newIndex);
+        function prevTrack() {
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrack);
             if (isPlaying) audio.play();
         }
 
         function toggleShuffle() {
             isShuffle = !isShuffle;
-            shuffleBtn.classList.toggle('active', isShuffle);
+            document.getElementById('shuffleBtn').classList.toggle('active', isShuffle);
         }
 
         function toggleRepeat() {
             repeatMode = (repeatMode + 1) % 3;
-            switch(repeatMode) {
-                case 0:
-                    repeatBtn.textContent = '🔁';
-                    repeatBtn.classList.remove('active');
-                    audio.loop = false;
-                    break;
-                case 1:
-                    repeatBtn.textContent = '🔁';
-                    repeatBtn.classList.add('active');
-                    audio.loop = false;
-                    break;
-                case 2:
-                    repeatBtn.textContent = '🔂';
-                    repeatBtn.classList.add('active');
-                    audio.loop = true;
-                    break;
+            const btn = document.getElementById('repeatBtn');
+            btn.classList.toggle('active', repeatMode > 0);
+            if (repeatMode === 2) btn.textContent = '🔂';
+            else btn.textContent = '🔁';
+        }
+
+        function updateVolume(value) {
+            audio.volume = value / 100;
+            const btn = document.getElementById('volumeBtn');
+            if (value == 0) btn.textContent = '🔇';
+            else if (value < 50) btn.textContent = '🔉';
+            else btn.textContent = '🔊';
+        }
+
+        function updateProgress() {
+            if (audio.duration) {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                document.getElementById('progressBar').value = progress;
+                document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
+                document.getElementById('duration').textContent = formatTime(audio.duration);
             }
         }
 
-        function renderPlaylist() {
-            playlistPopup.innerHTML = '';
-            PLAYLIST.forEach((track, i) => {
-                const item = document.createElement('div');
-                item.className = 'playlist-item-mini' + (i === currentIndex ? ' active' : '');
-                item.innerHTML = `
-                    <div class="playlist-num">${i + 1}</div>
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function seekTo(value) {
+            if (audio.duration) {
+                audio.currentTime = (value / 100) * audio.duration;
+            }
+        }
+
+        function downloadTrack() {
+            const track = playlist[currentTrack];
+            const a = document.createElement('a');
+            a.href = track.url;
+            a.download = `${track.title}.mp3`;
+            a.click();
+        }
+
+        function togglePlaylist() {
+            document.getElementById('playlistPopup').classList.toggle('show');
+        }
+
+        function updatePlaylistUI() {
+            const popup = document.getElementById('playlistPopup');
+            popup.innerHTML = playlist.map((track, index) => `
+                <div class="playlist-item-mini ${index === currentTrack ? 'active' : ''}" onclick="playTrack(${index})">
+                    <span class="playlist-num">${index + 1}</span>
                     <div class="playlist-text">
                         <div class="playlist-title">${track.title}</div>
                         <div class="playlist-artist">${track.artist}</div>
                     </div>
-                `;
-                item.onclick = () => {
-                    loadTrack(i);
-                    if (isPlaying) audio.play();
-                };
-                playlistPopup.appendChild(item);
-            });
+                </div>
+            `).join('');
         }
 
-        function updatePlaylistUI() {
-            const items = playlistPopup.querySelectorAll('.playlist-item-mini');
-            items.forEach((item, i) => {
-                item.classList.toggle('active', i === currentIndex);
-            });
+        function playTrack(index) {
+            currentTrack = index;
+            loadTrack(currentTrack);
+            audio.play();
+            isPlaying = true;
+            document.getElementById('playBtn').textContent = '⏸️';
+            togglePlaylist();
         }
 
-        // ========== 事件監聽 ==========
-        playBtn.onclick = togglePlay;
-        prevBtn.onclick = prevTrack;
-        nextBtn.onclick = nextTrack;
-        shuffleBtn.onclick = toggleShuffle;
-        repeatBtn.onclick = toggleRepeat;
+        function toggleVolumePopup() {
+            document.getElementById('volumePopup').classList.toggle('show');
+        }
 
-        volumeBtn.onclick = (e) => {
-            e.stopPropagation();
-            volumePopup.classList.toggle('show');
-            playlistPopup.classList.remove('show');
-        };
+        // 事件監聽
+        document.getElementById('playBtn').addEventListener('click', togglePlay);
+        document.getElementById('nextBtn').addEventListener('click', nextTrack);
+        document.getElementById('prevBtn').addEventListener('click', prevTrack);
+        document.getElementById('shuffleBtn').addEventListener('click', toggleShuffle);
+        document.getElementById('repeatBtn').addEventListener('click', toggleRepeat);
+        document.getElementById('volumeBtn').addEventListener('click', toggleVolumePopup);
+        document.getElementById('volumeSlider').addEventListener('input', (e) => updateVolume(e.target.value));
+        document.getElementById('downloadBtn').addEventListener('click', downloadTrack);
+        document.getElementById('playlistBtn').addEventListener('click', togglePlaylist);
+        document.getElementById('progressBar').addEventListener('input', (e) => seekTo(e.target.value));
 
-        volumeSlider.oninput = (e) => {
-            const vol = e.target.value / 100;
-            audio.volume = vol;
-            updateVolumeIcon(vol);
-        };
-
-        playlistBtn.onclick = (e) => {
-            e.stopPropagation();
-            playlistPopup.classList.toggle('show');
-            volumePopup.classList.remove('show');
-        };
-
-        document.onclick = () => {
-            volumePopup.classList.remove('show');
-            playlistPopup.classList.remove('show');
-        };
-
-        // 進度條更新
-        audio.addEventListener('timeupdate', () => {
-            if (audio.duration) {
-                const progress = (audio.currentTime / audio.duration) * 100;
-                progressBar.value = progress;
-                currentTimeEl.textContent = formatTime(audio.currentTime);
-                durationEl.textContent = formatTime(audio.duration);
-            }
-        });
-
-        // 進度條拖曳
-        progressBar.addEventListener('input', () => {
-            if (audio.duration) {
-                const newTime = (progressBar.value / 100) * audio.duration;
-                audio.currentTime = newTime;
-            }
-        });
-
-        // 載入元數據
-        audio.addEventListener('loadedmetadata', () => {
-            progressBar.value = 0;
-            currentTimeEl.textContent = '0:00';
-            durationEl.textContent = formatTime(audio.duration);
-        });
-
-        // 播放結束
+        audio.addEventListener('timeupdate', updateProgress);
         audio.addEventListener('ended', () => {
             if (repeatMode === 2) {
-                audio.currentTime = 0;
                 audio.play();
-                return;
-            }
-
-            if (repeatMode === 1 || isShuffle) {
+            } else if (repeatMode === 1 || currentTrack < playlist.length - 1) {
                 nextTrack();
             } else {
-                const nextIndex = currentIndex + 1;
-                if (nextIndex < PLAYLIST.length) {
-                    nextTrack();
-                } else {
-                    playBtn.textContent = '▶️';
-                    miniAlbum.classList.remove('spinning');
-                    isPlaying = false;
-                }
+                isPlaying = false;
+                document.getElementById('playBtn').textContent = '▶️';
             }
         });
 
-        // ========== 時鐘 ==========
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clockTime').textContent = 
-                now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        }
-        updateClock();
-        setInterval(updateClock, 1000);
-
-        // ========== 其他功能 ==========
-        function openSalaryCalculator() {
-            window.open('https://polo1364.github.io/overtime-calculator/', '_blank');
-        }
-
-        // ========== 自動播放 ==========
-        let userInteracted = false;
-        
-        // 頁面載入完成（init 已經處理隨機選歌）
-
-        // 使用者互動後立即播放
-        function startPlayback() {
-            if (userInteracted) return;
-            userInteracted = true;
-            
-            // 隱藏提示
-            const hintText = document.querySelector('.hint-text');
-            if (hintText) {
-                hintText.style.opacity = '0';
-                setTimeout(() => hintText.style.display = 'none', 500);
+        // 點擊外部關閉彈窗
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.mini-volume')) {
+                document.getElementById('volumePopup').classList.remove('show');
             }
-            
-            // 開始播放
-            audio.muted = false;
-            audio.play()
-                .then(() => {
-                    isPlaying = true;
-                    playBtn.textContent = '⏸';
-                    miniAlbum.classList.add('spinning');
-                })
-                .catch(err => {
-                    console.warn('播放失敗:', err);
-                    // 如果失敗，顯示播放按鈕讓使用者手動點擊
-                    playBtn.textContent = '▶️';
-                    isPlaying = false;
-                });
-        }
-
-        // 監聽多種使用者互動事件
-        ['click', 'touchstart', 'keydown'].forEach(event => {
-            document.addEventListener(event, startPlayback, { once: true });
-        });
-
-        // 下載按鈕
-        const downloadBtn = document.getElementById('downloadBtn');
-        downloadBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const track = PLAYLIST[currentIndex];
-            if (track.url) {
-                const a = document.createElement('a');
-                a.href = track.url;
-                a.download = track.title + '.mp3';
-                a.click();
+            if (!e.target.closest('#playlistBtn') && !e.target.closest('.playlist-popup')) {
+                document.getElementById('playlistPopup').classList.remove('show');
             }
         });
 
         // 初始化
-        init();
+        loadTrack(0);
+        updateVolume(70);
+
+        // 薪資計算器功能
+        function openSalaryCalculator() {
+            alert('薪資計算器功能開發中...');
+        }
+
+        // 啟用音樂提示
+        document.body.addEventListener('click', function enableAudio() {
+            audio.play().then(() => {
+                audio.pause();
+            }).catch(() => {});
+            document.body.removeEventListener('click', enableAudio);
+        }, { once: true });
     </script>
 </body>
 </html>
