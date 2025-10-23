@@ -97,6 +97,26 @@
             letter-spacing: 1px;
         }
 
+        .visitor-counter {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+        }
+
+        .visitor-counter .counter-icon {
+            font-size: 0.875rem;
+        }
+
+        .visitor-counter .counter-number {
+            color: var(--primary);
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--glow);
+        }
+
         /* Mini Music Player */
         .mini-player {
             background: var(--card-bg);
@@ -415,16 +435,41 @@
         .time-display p:first-child {
             font-size: 0.875rem;
             color: var(--text-muted);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             letter-spacing: 2px;
         }
 
-        .time-display p:last-child {
-            font-size: 1.25rem;
+        .clock-date {
+            font-size: 1rem;
             font-weight: 600;
             font-family: 'Courier New', monospace;
-            color: var(--accent);
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow-flow 3s linear infinite;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .clock-time {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'DS-Digital', 'Courier New', monospace;
+            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow-flow 3s linear infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            letter-spacing: 3px;
+        }
+
+        @keyframes rainbow-flow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
 
         /* Section Styles */
@@ -757,8 +802,12 @@
                 font-size: 2.5rem;
             }
 
-            .time-display p:last-child {
-                font-size: 1.5rem;
+            .clock-time {
+                font-size: 2.5rem;
+            }
+
+            .clock-date {
+                font-size: 1.125rem;
             }
 
             .tools-grid {
@@ -803,6 +852,11 @@
                     <div class="title-section">
                         <h1>大瑞娛樂中心</h1>
                         <p>[ Profound Material Technology Co., Ltd ]</p>
+                        <div class="visitor-counter">
+                            <span class="counter-icon">👁️</span>
+                            <span>瀏覽人次:</span>
+                            <span class="counter-number" id="visitorCount">0</span>
+                        </div>
                     </div>
                 </div>
 
@@ -856,7 +910,8 @@
                 
                 <div class="time-display">
                     <p>[ SYSTEM TIME ]</p>
-                    <p id="clockTime">--:--:--</p>
+                    <p id="clockDate" class="clock-date">----/--/-- (---)</p>
+                    <p id="clockTime" class="clock-time">--:--:--</p>
                 </div>
             </section>
 
@@ -955,9 +1010,16 @@
         // 時鐘更新
         function updateClock() {
             const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
+            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const weekday = weekdays[now.getDay()];
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            document.getElementById('clockDate').textContent = `${year}/${month}/${date} (${weekday})`;
             document.getElementById('clockTime').textContent = `${hours}:${minutes}:${seconds}`;
         }
         setInterval(updateClock, 1000);
@@ -1262,6 +1324,63 @@
             }).catch(() => {});
             document.body.removeEventListener('click', enableAudio);
         }, { once: true });
+
+        // 瀏覽人次計數器
+        async function getClientIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('無法取得 IP:', error);
+                return 'unknown';
+            }
+        }
+
+        function getTodayKey() {
+            const today = new Date();
+            return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+        }
+
+        async function updateVisitorCount() {
+            const ip = await getClientIP();
+            const todayKey = getTodayKey();
+            const storageKey = 'visitorData';
+            
+            // 取得儲存的資料
+            let visitorData = JSON.parse(localStorage.getItem(storageKey) || '{"totalCount": 0, "dailyIPs": {}}');
+            
+            // 初始化資料結構
+            if (!visitorData.totalCount) visitorData.totalCount = 0;
+            if (!visitorData.dailyIPs) visitorData.dailyIPs = {};
+            
+            // 初始化今天的 IP 清單
+            if (!visitorData.dailyIPs[todayKey]) {
+                visitorData.dailyIPs[todayKey] = [];
+            }
+            
+            // 檢查是否已記錄過這個 IP（今天）
+            if (!visitorData.dailyIPs[todayKey].includes(ip)) {
+                visitorData.dailyIPs[todayKey].push(ip);
+                visitorData.totalCount++;
+                localStorage.setItem(storageKey, JSON.stringify(visitorData));
+            }
+            
+            // 清理舊日期的 IP 記錄（保留最近 7 天）
+            const allDates = Object.keys(visitorData.dailyIPs);
+            if (allDates.length > 7) {
+                allDates.sort().slice(0, -7).forEach(date => {
+                    delete visitorData.dailyIPs[date];
+                });
+                localStorage.setItem(storageKey, JSON.stringify(visitorData));
+            }
+            
+            // 更新顯示
+            document.getElementById('visitorCount').textContent = visitorData.totalCount;
+        }
+
+        // 頁面載入時執行
+        updateVisitorCount();
     </script>
 </body>
 </html>
